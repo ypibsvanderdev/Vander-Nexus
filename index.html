@@ -8,78 +8,106 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
 </head>
-<body>
+<body class="auth-required">
     <div id="glow-bg"></div>
 
-    <div class="app-container">
-        <!-- Sidebar: Contacts & Search -->
+    <!-- AUTH PORTAL -->
+    <div id="auth-portal" class="overlay">
+        <div class="auth-card">
+            <div class="v-symbol">V</div>
+            <h1>VANDER-TALK</h1>
+            <p>Enter your ephemeral identity</p>
+            <div class="auth-input">
+                <input type="text" id="auth-username" placeholder="Choose Username..." autocomplete="off">
+                <button id="auth-enter">INITIALIZE</button>
+            </div>
+            <span class="auth-hint">Generated identities are one-time use and never logged.</span>
+        </div>
+    </div>
+
+    <div class="app-container hidden">
+        <!-- Sidebar: Discord-like Nodes -->
+        <nav class="node-rail">
+            <button class="node-btn active" title="Direct Terminals"><i class="fas fa-comment-dots"></i></button>
+            <button class="node-btn" id="open-browser-btn" title="Discover Node (Browser)"><i class="fas fa-compass"></i></button>
+            <button class="node-btn" title="Sentry Nodes"><i class="fas fa-shield-alt"></i></button>
+            <div class="rail-bottom">
+                <button class="node-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </nav>
+
         <aside class="sidebar">
             <header class="sidebar-header">
                 <div class="user-profile">
                     <div class="avatar-ring">
-                        <img src="https://ui-avatars.com/api/?name=Vander+Dev&background=00FF88&color=000" alt="Profile">
+                        <img id="my-avatar" src="https://ui-avatars.com/api/?name=V&background=00FF88&color=000" alt="Me">
                     </div>
-                </div>
-                <div class="sidebar-actions">
-                    <button id="ghost-mode-btn" title="Toggle Ghost Mode"><i class="fas fa-ghost"></i></button>
-                    <button id="settings-btn"><i class="fas fa-cog"></i></button>
+                    <span id="my-username" class="username-label">...</span>
                 </div>
             </header>
 
             <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search Encrypted Lines...">
+                <i class="fas fa-plus"></i>
+                <input type="text" id="user-search" placeholder="Search by Username...">
             </div>
 
             <div class="contact-list" id="contact-list">
-                <!-- Chats will be injected here -->
+                <div class="placeholder-text">Searching for Terminals...</div>
             </div>
         </aside>
 
-        <!-- Main Chat Area -->
-        <main class="chat-viewport">
-            <!-- Active Chat Header -->
-            <header class="chat-header">
-                <div class="chat-info">
-                    <div class="chat-avatar" id="active-avatar">
-                        <img src="https://ui-avatars.com/api/?name=?&background=333&color=fff" alt="User">
+        <!-- Main Content Area -->
+        <main class="main-stage">
+            <!-- CHAT VIEW -->
+            <section id="chat-view" class="content-view active">
+                <header class="chat-header">
+                    <div class="chat-info">
+                        <div class="chat-avatar" id="active-avatar">
+                            <img src="" alt="User">
+                        </div>
+                        <div class="chat-details">
+                            <h2 id="active-name">Select a Terminal</h2>
+                            <span class="status-indicator" id="active-status">Offline</span>
+                        </div>
                     </div>
-                    <div class="chat-details">
-                        <h2 id="active-name">Select a Terminal</h2>
-                        <span class="status-indicator" id="active-status">Waiting for Handshake...</span>
+                    <div class="chat-actions">
+                        <button id="btn-audio-call" class="primary-action"><i class="fas fa-phone"></i></button>
+                        <button id="btn-video-call" class="primary-action"><i class="fas fa-circle"></i></button>
+                        <button id="ghost-mode-btn" class="secondary-action"><i class="fas fa-ghost"></i></button>
                     </div>
-                </div>
-                <div class="chat-actions">
-                    <button id="btn-audio-call" class="primary-action"><i class="fas fa-phone"></i></button>
-                    <button id="btn-video-call" class="primary-action"><i class="fas fa-video"></i></button>
-                    <button class="secondary-action"><i class="fas fa-ellipsis-v"></i></button>
-                </div>
-            </header>
+                </header>
 
-            <!-- Message Container -->
-            <div class="message-container" id="message-container">
-                <div class="encryption-banner">
-                    <i class="fas fa-lock"></i>
-                    <span>E2E Sentry Shield Active. All transmission is XOR-encrypted.</span>
+                <div class="message-container" id="message-container">
+                    <div class="placeholder-msg">Search for a username above to start an encrypted transmission.</div>
                 </div>
-                <!-- Messages injected here -->
-            </div>
 
-            <!-- Input Bar -->
-            <footer class="input-area">
-                <button class="attach-btn"><i class="fas fa-plus"></i></button>
-                <div class="input-wrapper">
-                    <input type="text" id="chat-input" placeholder="Type a message...">
-                    <button class="emoji-btn"><i class="far fa-smile"></i></button>
-                </div>
-                <button class="send-btn" id="send-btn"><i class="fas fa-paper-plane"></i></button>
-            </footer>
+                <footer class="input-area">
+                    <button class="attach-btn" id="attach-btn"><i class="fas fa-paperclip"></i></button>
+                    <div class="input-wrapper">
+                        <input type="text" id="chat-input" placeholder="Type a message...">
+                    </div>
+                    <button class="send-btn" id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                </footer>
+            </section>
+
+            <!-- BROWSER VIEW -->
+            <section id="browser-view" class="content-view">
+                <header class="browser-header">
+                    <div class="address-bar">
+                        <i class="fas fa-lock"></i>
+                        <input type="text" id="browser-url" value="https://google.com">
+                    </div>
+                </header>
+                <iframe src="about:blank" id="browser-iframe"></iframe>
+            </section>
         </main>
     </div>
 
     <!-- Call Overlay -->
+    <!-- ... same as before but improved -->
     <div id="call-overlay" class="overlay hidden">
         <div class="call-card">
             <div class="call-avatar-large">
