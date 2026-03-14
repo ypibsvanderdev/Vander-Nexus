@@ -100,6 +100,55 @@
         </div>
     </div>
 
+    <!-- Additional Overlays -->
+    <div id="settings-modal" class="overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>SYSTEM SETTINGS</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="settings-body">
+                <div class="setting-item">
+                    <label>DISPLAY NAME</label>
+                    <input type="text" id="set-user-name" value="Vander Dev">
+                </div>
+                <div class="setting-item">
+                    <label>GHOST TIMEOUT (SECONDS)</label>
+                    <input type="number" id="set-ghost-time" value="5">
+                </div>
+                <div class="setting-item">
+                    <label>SENTRY ENCRYPTION LEVEL</label>
+                    <select id="set-encrypt-level">
+                        <option>XOR-256 (Standard)</option>
+                        <option>AES-GCM (Hardened)</option>
+                        <option>QUANTUM-SENTRY (Elite)</option>
+                    </select>
+                </div>
+                <button class="btn-save" id="save-settings">SAVE CHANGES</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="profile-modal" class="overlay hidden">
+        <div class="profile-card">
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+            <div class="card-hero">
+                <img id="prof-avatar" src="" alt="Avatar">
+            </div>
+            <h2 id="prof-name">Username</h2>
+            <p id="prof-bio">Secure communication line established via Vander-Talk v2.0. Standard encryption active.</p>
+            <div class="card-stats">
+                <div class="stat"><span>TRUST</span><span class="val">99%</span></div>
+                <div class="stat"><span>SENT</span><span class="val">1.2k</span></div>
+                <div class="stat"><span>Uptime</span><span class="val">14d</span></div>
+            </div>
+            <button class="btn-block">BLOCK TERMINAL</button>
+        </div>
+    </div>
+
+    <!-- Hidden Input for File Sharing -->
+    <input type="file" id="file-input" style="display: none;" accept="image/*">
+
     <div id="theme-toggle" title="Switch Theme">
         <i class="fas fa-moon"></i>
     </div>
