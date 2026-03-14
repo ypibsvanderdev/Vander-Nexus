@@ -3,101 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANDER-NEXUS | The Wealth Command Center</title>
+    <title>VANDER-TALK | Secure Communication Matrix</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div id="glow-cursor"></div>
-    <div class="particles-container" id="particles"></div>
+    <div id="glow-bg"></div>
 
-    <nav class="vander-nav">
-        <div class="logo">
-            <span class="v-symbol">V</span>
-            <span class="v-text">VANDER<span>NEXUS</span></span>
-        </div>
-        <div class="nav-links">
-            <a href="#" class="active">COMMAND</a>
-            <a href="#">VIRAL</a>
-            <a href="#">OUTREACH</a>
-            <a href="#">NETWORK</a>
-        </div>
-        <div class="nav-actions">
-            <button class="btn-premium">ENTER VAULT</button>
-        </div>
-    </nav>
-
-    <main class="dashboard">
-        <header class="hero-stats">
-            <div class="stat-card glow-green">
-                <span class="label">LIVE REVENUE</span>
-                <span class="value">$0.00</span>
-                <div class="progress-bar"><div class="fill" style="width: 5%"></div></div>
-            </div>
-            <div class="stat-card">
-                <span class="label">LEADS GENERATED</span>
-                <span class="value">0</span>
-                <span class="sub-text">+0% from yesterday</span>
-            </div>
-            <div class="stat-card">
-                <span class="label">VIRAL RATING</span>
-                <span class="value">S+</span>
-                <span class="sub-text">Optimized Engine</span>
-            </div>
-        </header>
-
-        <section class="grid-layout">
-            <div class="module main-module" id="viral-engine">
-                <div class="module-header">
-                    <h2>🚀 PROJECT VIRAL</h2>
-                    <p>AI-Powered Hook & Script Architecture</p>
-                </div>
-                <div class="input-group">
-                    <input type="text" placeholder="Enter your topic (e.g. AI Business)..." id="viral-input">
-                    <button class="btn-action" onclick="generateViral()">GENERATE HOOKS</button>
-                </div>
-                <div class="output-area" id="viral-output">
-                    <div class="placeholder-msg">System Standing By. Enter a topic to begin generation.</div>
-                </div>
-            </div>
-
-            <div class="module side-module">
-                <div class="module-header">
-                    <h2>📡 LEAD SENTRY</h2>
-                </div>
-                <div class="lead-list" id="lead-list">
-                    <div class="lead-item">
-                        <div class="lead-info">
-                            <span class="lead-name">TechCorp Solutions</span>
-                            <span class="lead-score">Hot Lead</span>
-                        </div>
-                        <button class="btn-mini">DM</button>
-                    </div>
-                    <div class="lead-item">
-                        <div class="lead-info">
-                            <span class="lead-name">Avenue Media</span>
-                            <span class="lead-score">Cold</span>
-                        </div>
-                        <button class="btn-mini">DM</button>
+    <div class="app-container">
+        <!-- Sidebar: Contacts & Search -->
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <div class="user-profile">
+                    <div class="avatar-ring">
+                        <img src="https://ui-avatars.com/api/?name=Vander+Dev&background=00FF88&color=000" alt="Profile">
                     </div>
                 </div>
-            </div>
-        </section>
+                <div class="sidebar-actions">
+                    <button id="ghost-mode-btn" title="Toggle Ghost Mode"><i class="fas fa-ghost"></i></button>
+                    <button id="settings-btn"><i class="fas fa-cog"></i></button>
+                </div>
+            </header>
 
-        <section class="terminal-section">
-            <div class="terminal-header">
-                <span>VANDER-OS CORE v1.0.4</span>
-                <div class="dots"><span></span><span></span><span></span></div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search Encrypted Lines...">
             </div>
-            <div class="terminal-body" id="terminal">
-                <p>> System Initialization Complete.</p>
-                <p>> Loading AI Training Models... [DONE]</p>
-                <p>> Ready for Command.</p>
+
+            <div class="contact-list" id="contact-list">
+                <!-- Chats will be injected here -->
             </div>
-        </section>
-    </main>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-viewport">
+            <!-- Active Chat Header -->
+            <header class="chat-header">
+                <div class="chat-info">
+                    <div class="chat-avatar" id="active-avatar">
+                        <img src="https://ui-avatars.com/api/?name=?&background=333&color=fff" alt="User">
+                    </div>
+                    <div class="chat-details">
+                        <h2 id="active-name">Select a Terminal</h2>
+                        <span class="status-indicator" id="active-status">Waiting for Handshake...</span>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button id="btn-audio-call" class="primary-action"><i class="fas fa-phone"></i></button>
+                    <button id="btn-video-call" class="primary-action"><i class="fas fa-video"></i></button>
+                    <button class="secondary-action"><i class="fas fa-ellipsis-v"></i></button>
+                </div>
+            </header>
+
+            <!-- Message Container -->
+            <div class="message-container" id="message-container">
+                <div class="encryption-banner">
+                    <i class="fas fa-lock"></i>
+                    <span>E2E Sentry Shield Active. All transmission is XOR-encrypted.</span>
+                </div>
+                <!-- Messages injected here -->
+            </div>
+
+            <!-- Input Bar -->
+            <footer class="input-area">
+                <button class="attach-btn"><i class="fas fa-plus"></i></button>
+                <div class="input-wrapper">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button class="emoji-btn"><i class="far fa-smile"></i></button>
+                </div>
+                <button class="send-btn" id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Call Overlay -->
+    <div id="call-overlay" class="overlay hidden">
+        <div class="call-card">
+            <div class="call-avatar-large">
+                <img id="overlay-avatar" src="" alt="Calling">
+            </div>
+            <h1 id="overlay-name">Vander Dumper</h1>
+            <span class="call-status pulse" id="call-status">CONNECTING...</span>
+            
+            <div class="visualizer">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+
+            <div class="call-controls">
+                <button class="btn-mute"><i class="fas fa-microphone-slash"></i></button>
+                <button class="btn-end" id="btn-end-call"><i class="fas fa-phone-slash"></i></button>
+                <button class="btn-speaker"><i class="fas fa-volume-up"></i></button>
+            </div>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
