@@ -1,4 +1,5 @@
 :root {
+    /* DEFAULT DARK THEME */
     --primary: #00FF88;
     --primary-glow: rgba(0, 255, 136, 0.4);
     --bg-dark: #0A0A0B;
@@ -9,8 +10,26 @@
     --text-low: #505055;
     --danger: #FF3B3B;
     --border: rgba(255, 255, 255, 0.05);
+    --msg-sent: var(--primary);
+    --msg-sent-text: #000000;
+    --msg-received: rgba(255, 255, 255, 0.05);
     --font-main: 'Outfit', sans-serif;
     --font-mono: 'Space Grotesk', sans-serif;
+    --shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+}
+
+body.light-mode {
+    --bg-dark: #F5F7FB;
+    --sidebar-bg: #FFFFFF;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --text-high: #1A1A1B;
+    --text-mid: #606067;
+    --text-low: #A0A0A5;
+    --border: rgba(0, 0, 0, 0.06);
+    --msg-sent: #00FF88;
+    --msg-sent-text: #000000;
+    --msg-received: #F0F2F5;
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -18,6 +37,7 @@
     padding: 0;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body {
@@ -29,6 +49,24 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--sidebar-bg);
+    border: 1px solid var(--border);
+    color: var(--text-high);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3000;
+    box-shadow: var(--shadow);
 }
 
 #glow-bg {
@@ -51,7 +89,7 @@ body {
     border-radius: 20px;
     display: flex;
     overflow: hidden;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
 }
 
 /* SIDEBAR */
@@ -124,7 +162,7 @@ body {
 .search-bar input {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--text-high);
     font-size: 14px;
     width: 100%;
     outline: none;
@@ -171,7 +209,7 @@ body {
     overflow: hidden;
 }
 
-.chat-item .name { font-weight: 600; font-size: 15px; }
+.chat-item .name { font-weight: 600; font-size: 15px; color: var(--text-high); }
 .chat-item .preview {
     font-size: 13px;
     color: var(--text-mid);
@@ -186,6 +224,7 @@ body {
     display: flex;
     flex-direction: column;
     background-image: radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.02) 0%, transparent 100%);
+    background-color: var(--sidebar-bg);
 }
 
 .chat-header {
@@ -210,7 +249,7 @@ body {
 
 .chat-avatar img { width: 100%; height: 100%; border-radius: 50%; }
 
-.chat-details h2 { font-size: 18px; font-weight: 700; }
+.chat-details h2 { font-size: 18px; font-weight: 700; color: var(--text-high); }
 .status-indicator { font-size: 12px; color: var(--primary); font-weight: 500; opacity: 0.8; }
 
 .chat-actions { display: flex; gap: 12px; }
@@ -259,29 +298,55 @@ body {
 }
 
 .msg {
-    max-width: 60%;
-    padding: 12px 18px;
+    max-width: 65%;
+    padding: 10px 14px;
     border-radius: 18px;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.4;
     position: relative;
     animation: fadeInMsg 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes fadeInMsg { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 .msg.received {
     align-self: flex-start;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--msg-received);
+    color: var(--text-high);
     border-bottom-left-radius: 4px;
 }
 
 .msg.sent {
     align-self: flex-end;
-    background: var(--primary);
-    color: black;
+    background: var(--msg-sent);
+    color: var(--msg-sent-text);
     font-weight: 500;
     border-bottom-right-radius: 4px;
+}
+
+.msg-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    font-size: 10px;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.read-receipt {
+    color: var(--text-high);
+    font-size: 12px;
+}
+
+.light-mode .read-receipt {
+    color: #1A1A1B;
+}
+
+.msg.sent .read-receipt {
+    color: var(--msg-sent-text);
 }
 
 /* INPUT AREA */
